@@ -1,0 +1,119 @@
+<% layout("/layouts/boilerplate") %>
+
+<body>
+  <div class="row mt-3">
+    <!-- Listing Heading -->
+    <div class="col-8 offset-3">
+      <h3><%= listing.title %></h3>
+    </div>
+
+    <!-- Listing Card -->
+    <div class="card col-6 offset-3 show-card listing-card">
+      <!-- Listing Image -->
+      <img 
+        src="<%= listing.image.url %>" 
+        class="card-img-top show-img" 
+        alt="listing_image"
+      />
+
+      <!-- Listing Details -->
+      <div class="card-body">
+        <p class="card-text"><i>Owned by <%= listing.owner.username %></i></p>
+        <p class="card-text"><%= listing.title %></p>
+        <p class="card-text"><%= listing.description %></p> <!-- Listing description -->
+        <p class="card-text">&#8377; <%= listing.price.toLocaleString("en-IN") %></p>
+        <p class="card-text"><%= listing.location %></p>
+        <p class="card-text"><%= listing.country %></p>
+      </div>
+    </div>
+
+    <!-- Edit/Delete Buttons (Visible only to the owner) -->
+    <% if (currUser && listing.owner._id.equals(currUser._id)) { %>
+      <br />
+      <div class="btns d-flex justify-content-start mt-3">
+        <!-- Edit Button -->
+        <a 
+          class="btn btn-dark col-1 offset-3 edit-btn me-2" 
+          href="/listings/<%= listing._id %>/edit"
+        >
+          Edit
+        </a>
+
+        <!-- Delete Button -->
+        <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE">
+          <button class="btn btn-dark offset-1">Delete</button>
+        </form>
+      </div>
+    <% } %>
+
+    <!-- Review Section -->
+    <div class="col-8 offset-3 mb-3">
+      <hr />
+
+      <!-- Leave a Review Form (Only for logged-in users) -->
+      <% if (currUser) { %>
+        <h4>Leave a Review</h4>
+        <form 
+          action="/listings/<%= listing.id %>/reviews" 
+          method="POST" 
+          novalidate 
+          class="needs-validation"
+        >
+          <!-- Rating Input -->
+          <div class="mb-3 mt-3">
+            <label for="rating" class="form-label">Rating</label>
+            <input 
+              type="range" 
+              class="form-range" 
+              min="1" 
+              max="5" 
+              id="rating" 
+              name="review[rating]"
+            />
+          </div>
+
+          <!-- Comment Input -->
+          <div class="mb-3 mt-3">
+            <label for="comment" class="form-label">Comments</label>
+            <textarea 
+              class="form-control" 
+              name="review[comment]" 
+              id="comment" 
+              cols="30" 
+              rows="5" 
+              required
+            ></textarea>
+            <div class="invalid-feedback">Please write some comments for review</div>
+          </div>
+
+          <!-- Submit Button -->
+          <button class="btn btn-outline-dark">Submit</button>
+        </form>
+        <hr />
+      <% } %>
+
+      <!-- Display All Reviews -->
+      <p><b>All Reviews</b></p>
+      <div class="row">
+        <% for (review of listing.reviews) { %>
+          <div class="card col-5 ms-3 mb-3">
+            <div class="card-body">
+              <h5 class="card-title">@<%= review.author.username %></h5> <!-- Username with @ -->
+              <p class="card-text"><%= review.comment %></p>
+              <p class="card-text"><%= review.rating %> Stars Rating</p>
+            </div>
+
+            <!-- Delete Review Button -->
+            <form 
+              class="mb-3" 
+              action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE" 
+              method="POST"
+            >
+              <button class="btn btn-sm btn-dark">Delete</button>
+            </form>
+          </div>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</body>

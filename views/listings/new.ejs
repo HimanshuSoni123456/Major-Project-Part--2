@@ -1,0 +1,92 @@
+<% layout("layouts/boilerplate") %>
+<div class="row mt-3">
+  <div class="col-8 offset-2"> <!-- offset-2 adds spacing on the left -->
+
+    <h3>Create a New Listing</h3>
+
+    <form method="POST" action="/listings" novalidate class = "needs-validation">
+      <!-- this nonvalidate is use to stop the defaults settings of the browser for the field required-->
+
+      <!-- Title Field -->
+      <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input
+          name="listing[title]"
+          class="form-control"
+          placeholder="Add a catchy title"
+          type="text"
+          required
+        />
+        <div class="valid-feedback">Title looks good!</div>
+      </div><!--This required means that this field can't be empty-->
+
+      <!-- Description Field -->
+      <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea
+          name="listing[description]"
+          class="form-control"
+          placeholder="Enter description"
+          required
+        ></textarea>
+        <div class="invalid-feedback">Please enter the description</div>
+      </div>
+
+      <!-- Image Field -->
+      <div class="mb-3">
+        <label for="image" class="form-label">Image Link</label>
+        <input
+          class="form-control"
+          name="listing[image][url]"
+          placeholder="Enter image URL"
+          type="text"
+        />
+      </div>
+
+      <!-- Price and Country Fields in one row -->
+      <div class="row">
+        <!-- Price Field -->
+        <div class="mb-3 col-md-4">
+          <label for="price" class="form-label">Price</label>
+          <input
+            class="form-control"
+            name="listing[price]"
+        
+            required
+          />
+          <div class="invalid-feedback">Please enter a valid price</div>
+        </div>
+
+        <!-- Country Field -->
+        <div class="mb-3 col-md-8">
+          <label for="country" class="form-label">Country</label>
+          <input
+            class="form-control"
+            name="listing[country]"
+            placeholder="India"
+            type="text"
+            required
+          />
+          <div class="invalid-feedback">Please enter a valid country</div>
+        </div>
+      </div>
+
+      <!-- Location Field -->
+      <div class="mb-3">
+        <label for="location" class="form-label">Location</label>
+        <input
+          class="form-control"
+          name="listing[location]"
+          placeholder="Nohar, Rajasthan"
+          type="text"
+          required
+        />
+          <div class="invalid-feedback">Please enter a location</div>
+      </div>
+
+      <!-- Submit Button -->
+      <button class="btn btn-dark add-btn mt-3">Add</button> <!-- mt-3 adds margin-top -->
+
+    </form>
+  </div>
+</div>

@@ -1,0 +1,79 @@
+<% layout("/layouts/boilerplate") %> <!-- Include boilerplate layout -->
+
+<h3>Edit Listing</h3>
+
+<form action="/listings/<%= listing._id %>?_method=PUT" method="POST" novalidate class ="needs-validation">
+  <!-- Title Field -->
+  <div class="mb-3">
+    <label for="title" class="form-label">Title</label>
+    <input
+      type="text"
+      class="form-control"
+      id="title"
+      name="listing[title]"
+      value="<%= listing.title %>"
+      required
+    />
+    <div class="valid-feedback">Title looks good!</div>
+  </div>
+
+  <!-- Description Field -->
+  <div class="mb-3">
+    <label for="description" class="form-label">Description</label>
+    <textarea
+      class="form-control"
+      id="description"
+      name="listing[description]"
+      rows="3"
+      required
+    ><%= listing.description %>
+  </textarea>
+  <div class="invalid-feedback">Please enter some description</div>
+  </div>
+
+  <!-- Price Field -->
+  <div class="mb-3">
+    <label for="price" class="form-label">Price (₹ per night)</label>
+    <input
+      type="number"
+      class="form-control"
+      id="price"
+      name="listing[price]"
+      value="<%= listing.price %>"
+      min="0"
+      required
+    />
+    <div class="invalid-feedback">Please enter a valid price</div>
+  </div>
+
+  <!-- Location Field -->
+  <div class="mb-3">
+    <label for="location" class="form-label">Location</label>
+    <input
+      type="text"
+      class="form-control"
+      id="location"
+      name="listing[location]"
+      value="<%= listing.location %>"
+      required
+    />
+    <div class="invalid-feedback">Please enter a valid location</div>
+  </div>
+
+  <!-- Country Field -->
+  <div class="mb-3">
+    <label for="country" class="form-label">Country</label>
+    <input
+      type="text"
+      class="form-control"
+      id="country"
+      name="listing[country]"
+      value="<%=listing.country%>"
+      required
+    />
+    <div class="invalid-feedback">Please enter a valid country</div>
+  </div>
+
+  <!-- Submit Button -->
+  <button type="submit" class="btn btn-primary">Update Listing</button>
+</form>
